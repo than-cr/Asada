@@ -1,0 +1,50 @@
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout.html}">
+
+<div layout:fragment="content">
+    <nav class="mb-2" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item active">Usuarios</li>
+        </ol>
+    </nav>
+
+    <h2 class="text-bold text-1100 mb-5">Usuarios</h2>
+    <div id="members">
+        <div class="row align-items-center justify-content-between g-3 mb-4">
+            <div class="col-auto">
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary"><span class="fas fa-plus me-2"></span>Agregar Usuario</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-white border-y border-300 mt-2 position-relative top-1">
+            <div class="table-responsive scrollbar ms-n1 ps-1">
+                <table class="table table-sm fs--1 mb-0">
+                    <thead>
+                        <tr>
+                            <th class="white-space-nowrap fs--1 align-middle ps-0">
+                                <div class="form-check mb-0 fs-0">
+                                    <input class="form-check-input" id="checkbox-bulk-members-select" type="checkbox" data-bulk-select='{"body": "members-table-body"}'/>
+                                </div>
+                            </th>
+                            <th class="sort align-middle" scope="col" data-sort="userId" style="width:15%; min-width:100px;">Cédula</th>
+                            <th class="sort align-middle" scope="col" data-sort="firstName" style="width:15%; min-width:100px;">Nombre</th>
+                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:15%; min-width:100px;">Apellido</th>
+                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:15%; min-width:100px;">Correo Electrónico</th>
+                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:15%; min-width:100px;">Teléfono</th>
+                            <th class="sort align-middle" scope="col" data-sort="lot" style="width:15%; min-width:100px;">Paja</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list" id="members-table-body">
+                        <tr th:each="user : ${users}">
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

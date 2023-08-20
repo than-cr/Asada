@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" dir="ltr">
+    <th:block th:insert="~{/fragments/head.html}"/>
+    <body>
+        <main class="main" id="top">
+            <th:block th:insert="~{/fragments/menu.html}"></th:block>
+
+            <div class="content">
+                <div layout:fragment="content">
+                    <p>Changing contents</p>
+                </div>
+            </div>'
+
+            <th:block th:insert="~{/fragments/bodyScripts.html}"/>
+        </main>
+    </body>
+    <th:block th:insert="~{/fragments/footerScripts.html}"/>
+</html>
