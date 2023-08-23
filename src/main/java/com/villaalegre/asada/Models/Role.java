@@ -1,16 +1,24 @@
 package com.villaalegre.asada.Models;
 
-import com.villaalegre.asada.Users.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collection;
 
+@Getter
+@Setter
 @Entity
-public class Role extends AbstractModel {
+public class Role {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @NotNull
     private String name;
+    @ManyToOne
+    @JoinColumn(name = "status")
+    private Type type;
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users;
 
@@ -22,27 +30,4 @@ public class Role extends AbstractModel {
     public Role() {
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Collection<User> users) {
-        this.users = users;
-    }
-
-    public Collection<Privilege> getPrivileges() {
-        return privileges;
-    }
-
-    public void setPrivileges(Collection<Privilege> privileges) {
-        this.privileges = privileges;
-    }
 }

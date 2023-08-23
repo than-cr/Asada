@@ -2,6 +2,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout.html}">
 
+<div layout:fragment="externalHead">
+    <script src="../static/js/Users.js" th:src="@{/js/Users.js}"></script>
+</div>
+
 <div layout:fragment="content">
     <nav class="mb-2" aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
@@ -14,7 +18,7 @@
         <div class="row align-items-center justify-content-between g-3 mb-4">
             <div class="col-auto">
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-primary"><span class="fas fa-plus me-2"></span>Agregar Usuario</button>
+                    <button class="btn btn-primary" id="addUser"><span class="fas fa-plus me-2"></span>Agregar Usuario</button>
                 </div>
             </div>
         </div>
@@ -24,27 +28,99 @@
                 <table class="table table-sm fs--1 mb-0">
                     <thead>
                         <tr>
-                            <th class="white-space-nowrap fs--1 align-middle ps-0">
-                                <div class="form-check mb-0 fs-0">
-                                    <input class="form-check-input" id="checkbox-bulk-members-select" type="checkbox" data-bulk-select='{"body": "members-table-body"}'/>
-                                </div>
-                            </th>
-                            <th class="sort align-middle" scope="col" data-sort="userId" style="width:15%; min-width:100px;">Cédula</th>
-                            <th class="sort align-middle" scope="col" data-sort="firstName" style="width:15%; min-width:100px;">Nombre</th>
-                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:15%; min-width:100px;">Apellido</th>
-                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:15%; min-width:100px;">Correo Electrónico</th>
-                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:15%; min-width:100px;">Teléfono</th>
-                            <th class="sort align-middle" scope="col" data-sort="lot" style="width:15%; min-width:100px;">Paja</th>
+                            <th class="sort align-middle" scope="col" data-sort="userId" style="width:10%; min-width:100px;">Cédula</th>
+                            <th class="sort align-middle" scope="col" data-sort="firstName" style="width:10%; min-width:100px;">Nombre</th>
+                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:10%; min-width:100px;">Apellido</th>
+                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:10%; min-width:100px;">Apellido</th>
+                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:10%; min-width:100px;">Correo Electrónico</th>
+                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:10%; min-width:100px;">Teléfono</th>
+                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:10%; min-width:100px;">Estado</th>
+                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:10%; min-width:100px;">Rol</th>
+                            <th class="sort align-middle" scope="col" data-sort="lastName" style="width:20%; min-width:100px;">Herramientas</th>
                         </tr>
                     </thead>
                     <tbody class="list" id="members-table-body">
                         <tr th:each="user : ${users}">
-
+                            <td th:text="${user.getUsername()}"></td>
+                            <td th:text="${user.getFirstName()}"></td>
+                            <td th:text="${user.getLastName()}"></td>
+                            <td th:text="${user.getMotherLastName()}"></td>
+                            <td th:text="${user.getEmail()}"></td>
+                            <td th:text="${user.getPhoneNumber()}"></td>
+                            <td>
+                                <span th:if="'Activo' == ${user.getStatus().getName()}">
+                                    <span class="badge badge-phoenix badge-phoenix-success me-2">Activo</span>
+                                </span>
+                                <span th:unless="'Activo' == ${user.getStatus().getName()}">
+                                    <span class="badge badge-phoenix badge-phoenix-danger me-2">Inactivo</span>
+                                </span>
+                            </td>
+                            <td th:text="${user.getRoles()[0].getName()}"></td>
+                            <td>
+                                <button class="btn btn-soft-primary" id="btnLot" th:attr="onclick=|goToLots(${user.getId()})|">Pajas</button>
+                                <button class="btn btn-soft-primary" id="btnEdit" th:attr="onclick=|editUser(${user.getId()})|">Editar</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
+
+<!--    User modal Add & Edit -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalTitle">Agregar Usuario</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs--1"></span> </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate="">
+                        <label class="form-label" for="firstName">Nombre</label>
+                        <input class="form-control" id="firstName" type="text" required />
+                        <div class="invalid-feedback">Favor ingrese un nombre.</div>
+
+                        <label class="form-label" for="lastName">Primer Apellido</label>
+                        <input class="form-control" id="lastName" type="text" required />
+                        <div class="invalid-feedback">Favor ingrese el primer apellido.</div>
+
+                        <label class="form-label" for="motherLastName">Segundo Apellido</label>
+                        <input class="form-control" id="motherLastName" type="text" required />
+                        <div class="invalid-feedback">Favor ingrese el segundo apellido.</div>
+
+                        <label class="form-label" for="userId">Cédula</label>
+                        <input class="form-control" id="userId" type="text" required />
+                        <div class="invalid-feedback">Favor ingrese el número de cédula.</div>
+
+                        <label class="form-label" for="phone">Teléfono</label>
+                        <input class="form-control" id="phone" type="tel" required />
+                        <div class="invalid-feedback">Favor ingrese un número de teléfono.</div>
+
+                        <label class="form-label" for="email">Correo Electrónico</label>
+                        <input class="form-control" id="email" type="email" />
+
+                        <label class="form-label" for="status">Estado</label>
+                        <select class="form-select" id="status" required>
+                            <option value="">Seleccionar</option>
+                            <option th:each="status : ${statuses}" th:value="${status.name}" th:text="${status.name}"></option>
+                        </select>
+
+                        <label class="form-label" for="role">Rol</label>
+                        <select class="form-select" id="role" required>
+                            <option value="">Seleccionar</option>
+                            <option th:each="rol : ${roles}" th:value="${rol.name}" th:text="${rol.name}"></option>
+                        </select>
+
+                        <br>
+
+                        <div class="flex-1 text-end">
+                            <button class="btn btn-primary px-6 px-sm-6" type="submit" id="saveUser">Guardar<span class="fas fa-save ms-1" data-fa-transform="shrink-3"> </span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

@@ -1,0 +1,105 @@
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout.html}">
+
+<div layout:fragment="externalHead">
+    <script src="../static/js/lot.js" th:src="@{/js/lot.js}"></script>
+</div>
+
+<div layout:fragment="content">
+    <nav class="mb-2" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item active">Pajas</li>
+        </ol>
+    </nav>
+
+    <h2 class="text-bold text-1100 mb-5" th:text="${owner}"></h2>
+    <input type="hidden" id="ownerId" th:value="${ownerId}"/>
+    <div id="members">
+        <div class="row align-items-center justify-content-between g-3 mb-4">
+            <div class="col-auto">
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary" id="addLot"><span class="fas fa-plus me-2"></span>Agregar Paja</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-white border-y border-300 mt-2 position-relative top-1">
+            <div class="table-responsive scrollbar ms-n1 ps-1">
+                <table class="table table-sm fs--1 mb-0">
+                    <thead>
+                        <tr>
+                            <th class="sort align-middle" scope="col" data-sort="lotName" style="width:15%; min-width:100px;">Paja</th>
+                            <th class="sort align-middle" scope="col" data-sort="lotLastMonthPaid" style="width:15%; min-width:100px;">Último mes pagado</th>
+                            <th class="sort align-middle" scope="col" data-sort="lotStatus" style="width:15%; min-width:100px;">Estado</th>
+                            <th class="sort align-middle" scope="col" style="width:15%; min-width:100px;">Herramientas</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list" id="members-table-body">
+                        <tr th:each="row : ${lots}">
+                            <td th:text="${row.getName()}"></td>
+                            <td th:text="${#dates.monthName(row.getLastMonthPaid()) + ' ' + #dates.year(row.getLastMonthPaid())}"></td>
+                            <td>
+                                <span th:if="'Activo' == ${row.getStatus().getName()}">
+                                    <span class="badge badge-phoenix badge-phoenix-success me-2">Activo</span>
+                                </span>
+                                <span th:if="'Inactivo' == ${row.getStatus().getName()}">
+                                    <span class="badge badge-phoenix badge-phoenix-danger me-2">Inactivo</span>
+                                </span>
+                                <span th:if="'Suspendido' == ${row.getStatus().getName()}">
+                                    <span class="badge badge-phoenix badge-phoenix-info me-2">Suspendido</span>
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-soft-primary" id="btnPay" th:attr="onclick=|addPayment(${row.getId()})|">Pagar mes</button>
+                                <button class="btn btn-soft-primary" id="btnEdit" th:attr="onclick=|editLot(${row.getId()})|">Editar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<!--    Lot modal Add & edit -->
+    <div class="modal fade" id="lotModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Paja</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs--1"></span> </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate="">
+                        <input type="hidden" id="lotId" value=""/>
+
+                        <label class="form-label" for="name">Nombre</label>
+                        <input class="form-control" id="name" type="text" required />
+                        <div class="invalid-feedback">Favor ingrese un nombre.</div>
+
+                        <br>
+                        <div class="flatpickr-input-container">
+                            <div class="form-floating">
+                                <input class="form-control datetimepicker" id="lastMonthPaid" type="text" placeholder="Último mes pagado" data-options='{"disableMobile":true}'/>
+                                <label class="ps-6" for="lastMonthPaid">último mes pagado</label>
+                                <span class="uil uil-calendar-alt flatpickr-icon text-700"></span>
+                            </div>
+                        </div>
+
+                        <label class="form-label" for="status">Estado</label>
+                        <select class="form-select" id="status" required>
+                            <option value="">Seleccionar</option>
+                            <option th:each="status : ${statuses}" th:value="${status.name}" th:text="${status.name}"></option>
+                        </select>
+
+                        <br>
+
+                        <div class="flex-1 text-end">
+                            <button class="btn btn-primary px-6 px-sm-6" type="submit" id="saveLot">Guardar<span class="fas fa-save ms-1" data-fa-transform="shrink-3"> </span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

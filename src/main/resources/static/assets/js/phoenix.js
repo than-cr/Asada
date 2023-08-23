@@ -4445,7 +4445,7 @@
         locale: {
           firstDayOfWeek: 0,
 
-          shorthand: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+          shorthand: ['L', 'M', 'K', 'J', 'V', 'S', 'D']
         },
         monthSelectorType: 'static',
         onDayCreate: (dObj, dStr, fp, dayElem) => {

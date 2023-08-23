@@ -9,7 +9,6 @@
   <!-- ===============================================-->
   <title>Asada Villa Alegre</title>
 
-
   <!-- ===============================================-->
   <!--    Favicons-->
   <!-- ===============================================-->
@@ -24,7 +23,6 @@
   <script src="../../static/vendors/simplebar/simplebar.min.js" th:src="@{/vendors/simplebar/simplebar.min.js}"></script>
   <script src="../../static/assets/js/config.js" th:src="@{/assets/js/config.js}"></script>
 
-
   <!-- ===============================================-->
   <!--    Stylesheets-->
   <!-- ===============================================-->
@@ -37,6 +35,7 @@
   <link href="../../static/assets/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default" th:href="@{/assets/css/theme.min.css}">
   <link href="../../static/assets/css/user-rtl.min.css" type="text/css" rel="stylesheet" id="user-style-rtl" th:href="@{/assets/css/user-rtl.min.css}">
   <link href="../../static/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default" th:href="@{/assets/css/user.min.css}">
+
   <script>
     var phoenixIsRTL = window.config.config.phoenixIsRTL;
     if (phoenixIsRTL) {
@@ -52,7 +51,14 @@
       userLinkRTL.setAttribute('disabled', true);
     }
   </script>
+  <link href="../../static/vendors/choices/choices.min.css" th:href="@{/vendors/choices/choices.min.css}" rel="stylesheet">
+  <link href="../../static/vendors/flatpickr/flatpickr.min.css" th:href="@{/vendors/flatpickr/flatpickr.min.css}" rel="stylesheet">
+
   <link href="../../static/vendors/leaflet/leaflet.css" rel="stylesheet"  th:href="@{/vendors/leaflet/leaflet.css}">
   <link href="../../static/vendors/leaflet.markercluster/MarkerCluster.css" rel="stylesheet" th:href="@{/vendors/leaflet.markercluster/MarkerCluster.css}">
   <link href="../../static/vendors/leaflet.markercluster/MarkerCluster.Default.css" rel="stylesheet" th:href="@{/vendors/leaflet.markercluster/MarkerCluster.Default.css}">
+
+  <script src="../../static/assets/js/jquery-3.7.0.min.js" th:src="@{/assets/js/jquery-3.7.0.min.js}"></script>
+
+  <script src="../../static/js/common.js" th:src="@{/js/common.js}"></script>
 </head>
