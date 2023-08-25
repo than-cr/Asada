@@ -5,6 +5,11 @@ $(document).ready(function () {
         $("#lotModal").modal('show');
     });
 
+    $("#btnGenerateReceipt").click(function () {
+        event.preventDefault();
+       $("#receipt").val(generateUuid());
+    });
+
     $("#saveLot").click(function () {
         event.preventDefault();
 
@@ -22,6 +27,22 @@ $(document).ready(function () {
         postRequest(url, objectToSave, function (response) {
             location.reload();
         });
+    });
+
+    $("#savePayment").click(function () {
+        event.preventDefault();
+
+        let payment = {
+            id: $("#paymentLotId").val(),
+            receiptId: $("#receipt").val()
+        };
+
+        let objectToSave = JSON.stringify(payment);
+        let url = "/lot/payment";
+
+        postRequest(url, objectToSave, function (response) {
+            location.reload();
+        })
     })
 });
 
@@ -33,7 +54,17 @@ function editLot(lotId) {
 
 function addPayment(lotId) {
     let url = "/lot/payment/" + lotId;
-    postRequest(url,null, function () {location.reload()});
+    getRequest(url, loadPaymentData);
+}
+
+function loadPaymentData(data) {
+    $("#paymentLotId").val(data.id);
+    const formatter = new Intl.DateTimeFormat("es", {month: "long", year: "numeric"});
+    const date = new Date(data.lastMonthPaid);
+    $("#monthToPay").val(formatter.format(new Date(date.getFullYear(), date.getMonth(), date.getDate())));
+    $("#totalToPay").val(data.payment);
+
+    $("#paymentModal").modal("show");
 }
 
 function loadLotData(data) {

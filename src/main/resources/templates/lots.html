@@ -102,4 +102,47 @@
             </div>
         </div>
     </div>
+
+    <!--    Lot modal Payment-->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalTitle">Agregar Pago</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs--1"></span> </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate="">
+                        <input type="hidden" id="paymentLotId" value=""/>
+
+                        <div class="row gl-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="receipt">Recibo</label>
+                                <input class="form-control" id="receipt" type="text" required />
+                                <div class="invalid-feedback">Favor ingrese un identificador de recibo.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <br>
+                                <button class="btn btn-soft-primary" id="btnGenerateReceipt">Generar identificador</button>
+                            </div>
+
+                        </div>
+
+
+                        <label class="form-label" for="monthToPay">Mes por pagar</label>
+                        <input class="form-control" id="monthToPay" type="text" placeholder="Último mes pagado" disabled/>
+
+                        <label class="form-label" for="totalToPay">Total a pagar</label>
+                        <input class="form-control datetimepicker" id="totalToPay" type="text" placeholder="Total a pagar" disabled/>
+
+                        <br>
+
+                        <div class="flex-1 text-end">
+                            <button class="btn btn-primary px-6 px-sm-6" type="submit" id="savePayment">Guardar<span class="fas fa-save ms-1" data-fa-transform="shrink-3"> </span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

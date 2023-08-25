@@ -23,3 +23,4 @@ INSERT INTO Asada.user_seq (next_val) VALUES (2);
 INSERT INTO Asada.users_roles (role_id, user_id) VALUES (1, 1);
 
 INSERT INTO Asada.lot_seq (next_val) VALUES (1);
+INSERT INTO Asada.lot_receipt_seq (next_val) VALUES (1);

@@ -1,5 +1,7 @@
 create schema Asada;
 
+SET SQL_REQUIRE_PRIMARY_KEY = false;
+
 create table Asada.type
 (
     id   bigint auto_increment,
@@ -44,9 +46,9 @@ create table Asada.roles_privileges
     role_id      bigint not null,
     privilege_id bigint not null,
     constraint FK5yjwxw2gvfyu76j3rgqwo685u
-        foreign key (privilege_id) references asada.privilege (id),
+        foreign key (privilege_id) references Asada.privilege (id),
     constraint FK9h2vewsqh8luhfq71xokh4who
-        foreign key (role_id) references asada.role (id)
+        foreign key (role_id) references Asada.role (id)
 );
 
 create table Asada.user
@@ -62,7 +64,7 @@ create table Asada.user
     phone_number     varchar(10) not null,
     status           bigint       not null,
     constraint FKtn8gwnenl0giyhdhy5xw62v31
-        foreign key (status) references asada.type (id)
+        foreign key (status) references Asada.type (id)
 );
 
 create table Asada.user_seq
@@ -96,12 +98,31 @@ create table Asada.lot
     constraint lot_user_id_fk
         foreign key (owner) references user (id),
     constraint lot_status_id_fk
-        foreign key (status) references asada.type (id)
+        foreign key (status) references Asada.type (id)
 );
 
 create table Asada.lot_seq
 (
     next_val bigint null
 );
+
+-- auto-generated definition
+create table Asada.lot_receipt
+(
+    id         bigint auto_increment
+        primary key,
+    lot_id     bigint      not null,
+    receipt_id varchar(50) not null,
+    month_paid date        not null,
+    cost       double      not null,
+    constraint lot_receipt_lot_id_fk
+        foreign key (lot_id) references Asada.lot (id)
+);
+
+create table Asada.lot_receipt_seq
+(
+    next_val bigint null
+);
+
 
 

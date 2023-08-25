@@ -11,4 +11,6 @@ public class LotDTO {
     private String owner;
     private String status;
     private String lastMonthPaid;
+    private double payment;
+    private String receiptId;
 }

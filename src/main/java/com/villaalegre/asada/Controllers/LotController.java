@@ -2,11 +2,14 @@ package com.villaalegre.asada.Controllers;
 
 import com.villaalegre.asada.DTO.LotDTO;
 import com.villaalegre.asada.Models.Lot;
+import com.villaalegre.asada.Models.LotReceipt;
 import com.villaalegre.asada.Models.Type;
 import com.villaalegre.asada.Models.User;
+import com.villaalegre.asada.Services.LotReceiptService;
 import com.villaalegre.asada.Services.LotService;
 import com.villaalegre.asada.Services.TypeService;
 import com.villaalegre.asada.Services.UserService;
+import com.villaalegre.asada.Utilities.CommonValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,9 @@ public class LotController {
 
     @Autowired
     private LotService lotService;
+
+    @Autowired
+    private LotReceiptService lotReceiptService;
 
     @Autowired
     private UserService userService;
@@ -73,26 +79,60 @@ public class LotController {
     }
 
     @Secured("ROLE_STAFF")
-    @PostMapping(value = "/lot/payment/{lotId}")
+    @GetMapping(value = "/lot/payment/{lotId}")
     @ResponseBody
-    public LotDTO payMonth(@PathVariable(value = "lotId") Long lotId) throws Exception {
-        final int MONTHS_TO_PAY = 1;
-
+    public LotDTO getLotReceipt(@PathVariable(value = "lotId") Long lotId) throws Exception {
         Optional<Lot> lot = lotService.findById(lotId);
         if (lot.isEmpty()) {
             throw new Exception("Lot not found");
         }
 
         Lot lotFound = lot.get();
-        Date lastMonthPaid = lotFound.getLastMonthPaid();
+        addMonthToLastMonthPaid(lotFound);
+
+        LotDTO lotDTO = lotService.convertToDTO(lotFound);
+        lotDTO.setPayment(CommonValues.DEFAULT_COST);
+
+        return lotDTO;
+    }
+
+    @Secured("ROLE_STAFF")
+    @PostMapping(value = "/lot/payment", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public LotDTO applyPayment(@RequestBody LotDTO lotDTO) throws Exception {
+        if (null == lotDTO || null == lotDTO.getId() || lotDTO.getReceiptId().isEmpty()) {
+            throw new Exception("Invalid Lot");
+        }
+
+        Optional<Lot> lot = lotService.findById(lotDTO.getId());
+        if (lot.isEmpty()) {
+            throw new Exception("Lot not found");
+        }
+
+        Lot lotFound = lot.get();
+        addMonthToLastMonthPaid(lotFound);
+        lotService.save(lotFound);
+
+        LotReceipt lotReceipt = new LotReceipt();
+        lotReceipt.setLot(lotFound);
+        lotReceipt.setCost(CommonValues.DEFAULT_COST);
+        lotReceipt.setMonthPaid(lotFound.getLastMonthPaid());
+        lotReceipt.setReceiptId(lotDTO.getReceiptId());
+
+        lotReceiptService.save(lotReceipt);
+
+        return lotDTO;
+    }
+
+    private void addMonthToLastMonthPaid(Lot lot) {
+        int monthsToPay = 1;
+
+        Date lastMonthPaid = lot.getLastMonthPaid();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(lastMonthPaid);
-        calendar.add(Calendar.MONTH, MONTHS_TO_PAY);
+        calendar.add(Calendar.MONTH, monthsToPay);
 
-        lotFound.setLastMonthPaid(calendar.getTime());
-
-        lotService.save(lotFound);
-        return lotService.convertToDTO(lotFound);
+        lot.setLastMonthPaid(calendar.getTime());
     }
 }
