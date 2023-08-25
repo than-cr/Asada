@@ -1,4 +1,4 @@
 FROM azul/zulu-openjdk:20
-VOLUME /tmp
-COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+MAINTAINER castro.asada
+COPY target/Asada-0.0.1-SNAPSHOT.jar Asada-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java","-jar","/Asada-0.0.1-SNAPSHOT.jar"]
