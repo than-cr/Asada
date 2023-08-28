@@ -20,7 +20,6 @@ public class HomeController {
     @GetMapping("/home")
     public String Home(Model model)
     {
-        model.addAttribute("username", "Admin");
         return "home";
     }
 }

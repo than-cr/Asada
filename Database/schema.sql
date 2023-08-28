@@ -115,6 +115,7 @@ create table Asada.lot_receipt
     receipt_id varchar(50) not null,
     month_paid date        not null,
     cost       double      not null,
+    created_date DATETIME  not null,
     constraint lot_receipt_lot_id_fk
         foreign key (lot_id) references Asada.lot (id)
 );

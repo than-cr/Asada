@@ -20,4 +20,9 @@ public class LotReceipt {
     private String receiptId;
     private Date MonthPaid;
     private double cost;
+    private Date createdDate;
+
+    public LotReceipt() {
+        this.createdDate = new Date();
+    }
 }

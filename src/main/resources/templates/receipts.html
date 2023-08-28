@@ -1,0 +1,39 @@
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout.html}">
+
+<div layout:fragment="externalHead">
+<!--    <script src="../static/js/lot.js" th:src="@{/js/lot.js}"></script>-->
+</div>
+
+<div layout:fragment="content">
+    <div class="scrollbar" th:each="lot : ${lots}">
+        <div>
+            <h4 class="py-3 border-y border-300 mb-5 ms-8" th:text="${lot.getName()}"></h4>
+        </div>
+        <div class="timeline-basic mb-5">
+            <div class="timeline-item" th:each="lotData : ${lotReceipts}" th:if="${lot.getId() == lotData.getLot().getId()}">
+                <div class="row g-3">
+                    <div class="col-auto">
+                        <div class="timeline-item-bar position-relative">
+                            <div class="icon-item icon-item-md rounded-7 border">
+                                <span class="fa-solid fa-receipt text-success fs--1"></span>
+                            </div>
+                            <span class="timeline-bar border-end border-dashed border-300"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex mb-2">
+                                <h6 class="lh-sm mb-0 me-2 text-800 timeline-item-title" th:text="${lotData.getReceiptId()}"></h6>
+                            </div>
+                        </div>
+                        <h6 class="fs--1 fw-normal mb-3 fw-semi-bold" th:text="${#dates.format(lotData.getCreatedDate(), 'dd-MM-yyyy')}"></h6>
+                        <p class="fs--1 text-800 w-sm-60 mb-1" th:text="'Mes pagado: ' + ${#dates.format(lotData.getMonthPaid(), 'MM-yyyy')}"></p>
+                        <p class="fs--1 text-800 w-sm-60 mb-5" th:text="'Total pagado: ' + ${lotData.getCost()}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

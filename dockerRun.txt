@@ -1,5 +1,8 @@
 docker buildx build --platform linux/amd64 -t asada .
-docker run -it asada:latest
+
+sudo docker build --tag=asada:latest .
+
+sudo docker run -it asada:latest
 
 docker tag asada thancr1/asada
 docker commit CONTAINER_ID IMAGE - docker commit a9475ad2621a asada

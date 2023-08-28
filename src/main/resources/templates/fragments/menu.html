@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-vertical navbar-expand-lg">
   <script>
     var navbarStyle = window.config.config.phoenixNavbarStyle;
@@ -21,7 +20,7 @@
         </li>
         <!--Payments-->
         <li class="nav-item">
-          <a class="nav-link label-1" href="../home" th:href="@{/home}" role="button">
+          <a class="nav-link label-1" href="../receipts" th:href="@{/receipts}" role="button">
             <div class="d-flex align-items-center">
               <span class="nav-link-icon fas fa-wallet"></span>
               <span class="nav-link-text mx-2">Mis pagos</span>
@@ -97,7 +96,7 @@
                   <img src="../../static/assets/img/team/72x72/avatar.webp" th:src="@{/assets/img/team/72x72/avatar.webp}" alt=""/>
                 </div>
                 <h6>
-                  <span th:text="${username}"></span>
+                  <span th:text="${#authentication.name}"></span>
                 </h6>
                 <form th:action="@{/logout}" th:method="post">
                   <input class="btn btn-soft-danger" type="submit" value="Cerrar sesión">

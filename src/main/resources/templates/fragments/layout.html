@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en-US" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" dir="ltr">
-    <th:block th:insert="~{/fragments/head.html}"/>
+<html lang="es-ES" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" dir="ltr">
+    <th:block th:insert="~{fragments/head.html}"/>
     <th:block layout:fragment="externalHead"></th:block>
     <body>
         <main class="main" id="top">
-            <th:block th:insert="~{/fragments/menu.html}"></th:block>
+            <th:block th:insert="~{fragments/menu}"></th:block>
 
             <div class="content">
                 <div layout:fragment="content">
@@ -12,8 +12,8 @@
                 </div>
             </div>'
 
-            <th:block th:insert="~{/fragments/bodyScripts.html}"/>
+            <th:block th:insert="~{fragments/bodyScripts.html}"/>
         </main>
     </body>
-    <th:block th:insert="~{/fragments/footerScripts.html}"/>
+    <th:block th:insert="~{fragments/footerScripts.html}"/>
 </html>
