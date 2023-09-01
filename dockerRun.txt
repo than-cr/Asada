@@ -8,4 +8,4 @@ docker tag asada thancr1/asada
 docker commit CONTAINER_ID IMAGE - docker commit a9475ad2621a asada
 docker push thancr1/asada:latest
 
-
+test
