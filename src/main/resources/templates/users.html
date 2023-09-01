@@ -17,7 +17,7 @@
     <div id="members">
         <div class="row align-items-center justify-content-between g-3 mb-4">
             <div class="col-auto">
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center" th:if="${addUserPrivilege}">
                     <button class="btn btn-primary" id="addUser"><span class="fas fa-plus me-2"></span>Agregar Usuario</button>
                 </div>
             </div>
@@ -57,8 +57,8 @@
                             </td>
                             <td th:text="${user.getRoles()[0].getName()}"></td>
                             <td>
-                                <button class="btn btn-soft-primary" id="btnLot" th:attr="onclick=|goToLots(${user.getId()})|">Pajas</button>
-                                <button class="btn btn-soft-primary" id="btnEdit" th:attr="onclick=|editUser(${user.getId()})|">Editar</button>
+                                <button class="btn btn-soft-primary" id="btnLot" th:if="${viewLots}" th:attr="onclick=|goToLots(${user.getId()})|">Pajas</button>
+                                <button class="btn btn-soft-primary" id="btnEdit" th:if="${editUserPrivilege}" th:attr="onclick=|editUser(${user.getId()})|">Editar</button>
                             </td>
                         </tr>
                     </tbody>

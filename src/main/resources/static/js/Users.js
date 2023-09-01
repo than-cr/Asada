@@ -2,6 +2,17 @@ $(document).ready(function () {
 
     $("#addUser").click(function () {
         event.preventDefault();
+        $("#userId").val("");
+        $("#firstName").val("");
+        $("#lastName").val("");
+        $("#motherLastName").val("");
+        $("#phone").val("");
+        $("#email").val("");
+        $("#status").val("");
+        $("#role").val("");
+
+        $("#userId").attr("disabled", false);
+
         $("#userModal").modal('show');
     });
 
@@ -19,7 +30,7 @@ $(document).ready(function () {
        };
 
        let objectToSave = JSON.stringify(user);
-       let url = "/user";
+       let url = "/users";
        postRequest(url, objectToSave, function (response) {
            location.reload();
        })
@@ -31,7 +42,7 @@ function goToLots (userId) {
 }
 
 function editUser (userId) {
-    let url = "/user/" + userId;
+    let url = "/users/" + userId;
 
     getRequest(url, loadUserData);
 }
@@ -45,6 +56,8 @@ function loadUserData(data) {
    $("#email").val(data.email);
    $("#status").val(data.status);
    $("#role").val(data.role);
+
+   $("#userId").attr("disabled", true);
 
     $("#userModal").modal('show');
 }

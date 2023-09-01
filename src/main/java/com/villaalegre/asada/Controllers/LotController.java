@@ -12,6 +12,7 @@ import com.villaalegre.asada.Services.UserService;
 import com.villaalegre.asada.Utilities.CommonValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,8 @@ import java.util.Optional;
 @Controller
 public class LotController {
 
+    private static final String OBJECT_NAME = "lots";
+
     @Autowired
     private LotService lotService;
 
@@ -37,8 +40,8 @@ public class LotController {
     @Autowired
     private TypeService typeService;
 
-    @Secured("ROLE_STAFF")
-    @GetMapping(value = "/lots/{userId}")
+    @PreAuthorize("hasPermission('Lots', 'View lots')")
+    @GetMapping(value = "/" + OBJECT_NAME + "/{userId}")
     public String index(Model model, @PathVariable(value = "userId") Long userId) throws Exception {
         Optional<User> user = userService.findById(userId);
         if (user.isEmpty()) {
@@ -58,8 +61,8 @@ public class LotController {
         return "lots";
     }
 
-    @Secured("ROLE_STAFF")
-    @GetMapping(value = "/lot/{lotId}")
+    @PreAuthorize("hasPermission('Lots', 'Edit lot')")
+    @GetMapping(value = "/" + OBJECT_NAME + "/view/{lotId}")
     @ResponseBody
     public LotDTO getLot(@PathVariable(value = "lotId") Long lotId) throws Exception {
         Optional<Lot> lot = lotService.findById(lotId);
@@ -71,15 +74,15 @@ public class LotController {
         return lotService.convertToDTO(lot.get());
     }
 
-    @Secured("ROLE_STAFF")
-    @PostMapping(value = "/lot", consumes = "application/json", produces = "application/json")
+    @PreAuthorize("hasPermission('Lots', 'Add lot, Edit lot')")
+    @PostMapping(value = "/" + OBJECT_NAME, consumes = "application/json", produces = "application/json")
     @ResponseBody
     public LotDTO saveLot(@RequestBody LotDTO lotDTO) throws Exception {
         return lotService.registerNewLotOrUpdate(lotDTO);
     }
 
-    @Secured("ROLE_STAFF")
-    @GetMapping(value = "/lot/payment/{lotId}")
+    @PreAuthorize("hasPermission('Lots', 'Edit lot')")
+    @GetMapping(value = "/" + OBJECT_NAME + "/payment/{lotId}")
     @ResponseBody
     public LotDTO getLotReceipt(@PathVariable(value = "lotId") Long lotId) throws Exception {
         Optional<Lot> lot = lotService.findById(lotId);
@@ -97,7 +100,7 @@ public class LotController {
     }
 
     @Secured("ROLE_STAFF")
-    @PostMapping(value = "/lot/payment", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/" + OBJECT_NAME + "/payment", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public LotDTO applyPayment(@RequestBody LotDTO lotDTO) throws Exception {
         if (null == lotDTO || null == lotDTO.getId() || lotDTO.getReceiptId().isEmpty()) {

@@ -1,6 +1,7 @@
 package com.villaalegre.asada.Services;
 
 import com.villaalegre.asada.Models.CustomUserDetails;
+import com.villaalegre.asada.Models.Privilege;
 import com.villaalegre.asada.Models.Role;
 import com.villaalegre.asada.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>(); // use list if you wish
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for (Role role : roles) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+            for (Privilege privilege : role.getPrivileges()) {
+                grantedAuthorities.add(new SimpleGrantedAuthority(privilege.getName()));
+            }
         }
         return grantedAuthorities;
     }

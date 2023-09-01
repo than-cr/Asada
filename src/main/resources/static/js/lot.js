@@ -22,7 +22,7 @@ $(document).ready(function () {
         };
 
         let objectToSave = JSON.stringify(lot);
-        let url = "/lot";
+        let url = "/lots";
 
         postRequest(url, objectToSave, function (response) {
             location.reload();
@@ -38,7 +38,7 @@ $(document).ready(function () {
         };
 
         let objectToSave = JSON.stringify(payment);
-        let url = "/lot/payment";
+        let url = "/lots/payment";
 
         postRequest(url, objectToSave, function (response) {
             location.reload();
@@ -47,13 +47,13 @@ $(document).ready(function () {
 });
 
 function editLot(lotId) {
-    let url = "/lot/" + lotId;
+    let url = "/lots/view/" + lotId;
 
     getRequest(url, loadLotData);
 }
 
 function addPayment(lotId) {
-    let url = "/lot/payment/" + lotId;
+    let url = "/lots/payment/" + lotId;
     getRequest(url, loadPaymentData);
 }
 

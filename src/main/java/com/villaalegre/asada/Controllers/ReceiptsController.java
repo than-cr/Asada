@@ -10,6 +10,7 @@ import com.villaalegre.asada.Services.UserService;
 import com.villaalegre.asada.Utilities.CommonMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,8 @@ import java.util.Optional;
 @Controller
 public class ReceiptsController {
 
+    private static final String OBJECT_NAME = "receipts";
+
     @Autowired
     private LotReceiptService lotReceiptService;
 
@@ -36,8 +39,8 @@ public class ReceiptsController {
     @Autowired
     private CommonMethods commonMethods;
 
-    @Secured("ROLE_USER")
-    @GetMapping("/receipts")
+    @PreAuthorize("hasPermission('Receipts', 'View receipts')")
+    @GetMapping("/" + OBJECT_NAME)
     public String index(Model model) throws Exception {
 
         User user = commonMethods.getLoggedUser();

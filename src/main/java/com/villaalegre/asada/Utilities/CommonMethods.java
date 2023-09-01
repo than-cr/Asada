@@ -16,8 +16,6 @@ public class CommonMethods {
     @Autowired
     private UserService userService;
 
-    public CommonMethods() {}
-
     public User getLoggedUser() {
         String currentUserName = "";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
