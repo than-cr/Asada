@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.ViewResolver;
+import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring6.ISpringTemplateEngine;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
@@ -58,7 +59,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/assets/**", "/css/**", "/js/**", "/vendors/**", "/img/**").permitAll()
                         .requestMatchers("/*.css", "/*.png", "/*.js", "/*.webp").permitAll()
-
+                        .requestMatchers("/error/**").permitAll()
                 .anyRequest().authenticated()
         )
                 .csrf(AbstractHttpConfigurer::disable)

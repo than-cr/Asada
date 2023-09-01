@@ -10,7 +10,7 @@
     <div class="navbar-vertical-content">
       <ul class="navbar-nav" id="navbarVerticalNav">
         <!--Home-->
-        <li class="nav-item">
+        <li class="nav-item" sec:authorize="hasAuthority('View home')">
           <a class="nav-link label-1" href="../home" th:href="@{/home}" role="button">
             <div class="d-flex align-items-center">
               <span class="nav-link-icon fas fa-home"></span>
@@ -19,7 +19,7 @@
           </a>
         </li>
         <!--Payments-->
-        <li class="nav-item">
+        <li class="nav-item" sec:authorize="hasAuthority('View receipts')">
           <a class="nav-link label-1" href="../receipts" th:href="@{/receipts}" role="button">
             <div class="d-flex align-items-center">
               <span class="nav-link-icon fas fa-wallet"></span>
@@ -28,7 +28,7 @@
           </a>
         </li>
         <!--Users-->
-        <li class="nav-item">
+        <li class="nav-item" sec:authorize="hasAuthority('View users')">
           <a class="nav-link label-1" href="../users" th:href="@{/users}" role="button">
             <div class="d-flex align-items-center">
               <span class="nav-link-icon fas fa-users"></span>

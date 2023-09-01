@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class LotController {
+public class LotController extends AbstractController{
 
     private static final String OBJECT_NAME = "lots";
 

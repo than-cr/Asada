@@ -7,6 +7,38 @@
 </div>
 
 <div layout:fragment="content">
+
+    <div th:if="${viewAllReceipts}" class="search-box d-lg-block" style="width: 25rem;">
+        <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+            <input class="form-control search-input fuzzy-search rounded-pill form-control-sm" type="search" placeholder="Buscar usuario..." aria-label="Buscar">
+            <span class="fas fa-search search-box-icon"></span>
+        </form>
+
+        <div class="btn-close position-absolute end-0 top-50 translate-middle cursor-pointer shadow-none" data-bs-dismiss="search">
+            <button class="btn btn-link btn-close-falcon p-0" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="dropdown-menu border border-300 font-base start-0 py-0 overflow-hidden w-100">
+            <div class="scrollbar-overlay" style="max-height: 30rem;">
+                <div class="list pb-3">
+                    <div th:each="user : ${userList}">
+                        <div class="py-2">
+                            <a class="dropdown-item" th:href="@{|/receipts/${user.getUsername()}|}">
+                                <div class="d-flex align-items-center">
+                                    <div class="fw-normal text-1000 title">
+                                        <p th:text="${user.getFirstName() + ' ' + user.getLastName() + ' ' + user.getMotherLastName()}"></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
     <div class="scrollbar" th:each="lot : ${lots}">
         <div>
             <h4 class="py-3 border-y border-300 mb-5 ms-8" th:text="${lot.getName()}"></h4>

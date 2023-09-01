@@ -8,10 +8,8 @@ import com.villaalegre.asada.Models.User;
 import com.villaalegre.asada.Services.RoleService;
 import com.villaalegre.asada.Services.TypeService;
 import com.villaalegre.asada.Services.UserService;
-import com.villaalegre.asada.Utilities.CommonMethods;
 import com.villaalegre.asada.Utilities.CommonValues;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @Controller
-public class UsersController {
+public class UsersController extends AbstractController {
 
     private static final String OBJECT_NAME = "users";
 
@@ -34,9 +32,6 @@ public class UsersController {
     private RoleService roleService;
 
     @Autowired
-    private CommonMethods commonMethods;
-
-    @Autowired
     private PrivilegeEvaluate privilegeEvaluate;
 
     @PreAuthorize("hasPermission('Users', 'View users')")
@@ -46,16 +41,16 @@ public class UsersController {
         List<Type> statuses = typeService.findByGroup("user status");
         List<Role> roles = roleService.findAll();
 
-        if (!commonMethods.getLoggedUser().getUsername().equals(CommonValues.SUPER_ADMIN)) {
+        if (!getLoggedUser().getUsername().equals(CommonValues.SUPER_ADMIN)) {
             Optional<User> userAdmin = userService.findByUsername("116480417");
             userAdmin.ifPresent(users::remove);
             Optional<Role> roleAdmin = roleService.findByName("Admin");
             roleAdmin.ifPresent(roles::remove);
         }
 
-        model.addAttribute("addUserPrivilege", privilegeEvaluate.hasPrivilege("Add user"));
-        model.addAttribute("editUserPrivilege", privilegeEvaluate.hasPrivilege("Edit user"));
-        model.addAttribute("viewLots", privilegeEvaluate.hasPrivilege("View lots"));
+        model.addAttribute("addUserPrivilege", hasPrivilege("Add user"));
+        model.addAttribute("editUserPrivilege", hasPrivilege("Edit user"));
+        model.addAttribute("viewLots", hasPrivilege("View lots"));
         model.addAttribute(OBJECT_NAME, users);
         model.addAttribute("statuses", statuses);
         model.addAttribute("roles", roles);

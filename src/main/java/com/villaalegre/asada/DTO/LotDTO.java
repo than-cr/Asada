@@ -13,4 +13,5 @@ public class LotDTO {
     private String lastMonthPaid;
     private double payment;
     private String receiptId;
+    private long monthsInDebt;
 }

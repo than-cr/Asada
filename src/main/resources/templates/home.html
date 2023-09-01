@@ -3,5 +3,29 @@
       layout:decorate="~{fragments/layout.html}">
 
 <div layout:fragment="content">
-    Bienvenido al portal de la Asada Villa Alegre.
+    <p>Bienvenido al portal de la Asada Villa Alegre.</p>
+
+    <div class="px-3 mb-5 mt-5">
+        <div class="row justify-content-around">
+            <div class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl-0 border-end-xxl-0 border-bottom-xxl-0 border-top-xxl-0 border-start border-end border-bottom border-top pb-4 pb-xxl-0">
+                <span class="uil fs-3 lh-1 uil-home text-primary"></span>
+                <h1 class="fs-3 pt-3" th:text="${lotsQuantity}"></h1>
+                <p class="fs--1 mb-0">Total pajas</p>
+            </div>
+
+
+            <div th:each="lot : ${lots}" class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl-0 border-end-xxl-0 border-bottom-xxl-0 border-top-xxl-0 border-start border-end border-bottom border-top pb-4 pb-xxl-0">
+                <span class="uil fs-3 lh-1 uil-wallet text-primary"></span>
+                <h1 class="fs-3 pt-3" th:text="${lot.getMonthsInDebt()}"></h1>
+                <p class="fs--1 mb-0">Meses en deuda
+                    <span th:text="${lot.getName()}"></span>
+                </p>
+                <p class="fs--1 mb-0">Último mes pagado:
+                    <span th:text="${lot.getLastMonthPaid()}"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <p>Recordemos el pago a tiempo.</p>
 </div>
