@@ -1,3 +1,6 @@
+mvn clean
+mvn install
+
 docker buildx build --platform linux/amd64 -t asada . // Correr si se crea desde la mac
 
 sudo docker build --tag=asada:latest . // Correr si se crea desde linux

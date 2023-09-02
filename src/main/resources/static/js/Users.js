@@ -32,8 +32,10 @@ $(document).ready(function () {
        let objectToSave = JSON.stringify(user);
        let url = "/users";
        postRequest(url, objectToSave, function (response) {
-           location.reload();
-       })
+           successAlert(function () {
+               location.reload();
+           });
+       }, errorAlert);
     });
 });
 

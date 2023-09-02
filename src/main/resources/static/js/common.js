@@ -29,3 +29,21 @@ function generateUuid() {
         return v.toString(16);
     });
 }
+
+function successAlert(action) {
+    swal({
+        title: "Bien hecho",
+        text: "Información guardada exitosamente.",
+        icon: "success",
+        button: "Cerrar",
+    }).then(action);
+}
+
+function errorAlert() {
+    swal({
+        title: "Error",
+        text: "Hubo un error al procesar la información.",
+        icon: "warning",
+        button: "Cerrar",
+    });
+}

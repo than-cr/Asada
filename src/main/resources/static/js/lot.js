@@ -25,8 +25,10 @@ $(document).ready(function () {
         let url = "/lots";
 
         postRequest(url, objectToSave, function (response) {
-            location.reload();
-        });
+            successAlert(function () {
+                location.reload();
+            });
+        }, errorAlert);
     });
 
     $("#savePayment").click(function () {
@@ -41,8 +43,10 @@ $(document).ready(function () {
         let url = "/lots/payment";
 
         postRequest(url, objectToSave, function (response) {
-            location.reload();
-        })
+            successAlert(function () {
+                location.reload();
+            });
+        }, errorAlert);
     })
 });
 
