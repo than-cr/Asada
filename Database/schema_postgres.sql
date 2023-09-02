@@ -7,10 +7,7 @@ create table type
         primary key (id)
 );
 
-create table type_seq
-(
-    next_val bigint null
-);
+create sequence type_seq as integer start with 6;
 
 create table role
 (
@@ -23,10 +20,7 @@ create table role
         foreign key (status) references type(id)
 );
 
-create table role_seq
-(
-    next_val bigint null
-);
+create sequence role_sq as integer start with 4;
 
 create table privilege
 (
@@ -63,10 +57,7 @@ create table "user"
         foreign key (status) references type (id)
 );
 
-create table user_seq
-(
-    next_val bigint null
-);
+create sequence user_seq as integer start with 2;
 
 create table users_roles
 (
@@ -79,8 +70,6 @@ create table users_roles
     constraint users_roles_user_id_fk
         foreign key (user_id) references "user" (id)
 );
-
-
 
 create table lot
 (
@@ -97,10 +86,7 @@ create table lot
         foreign key (status) references type (id)
 );
 
-create table lot_seq
-(
-    next_val bigint null
-);
+create sequence lot_seq as integer start with 1;
 
 -- auto-generated definition
 create table lot_receipt
@@ -116,7 +102,4 @@ create table lot_receipt
         foreign key (lot_id) references lot (id)
 );
 
-create table lot_receipt_seq
-(
-    next_val bigint null
-);
+create sequence lot_receipt_seq as integer start with 1;

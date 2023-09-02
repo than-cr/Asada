@@ -12,7 +12,8 @@ import java.util.Collection;
 @Entity
 public class Role {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
+    @SequenceGenerator(name = "role_seq", allocationSize = 1)
     private Long id;
     @NotNull
     private String name;

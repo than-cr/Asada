@@ -11,7 +11,8 @@ import java.util.Date;
 @Entity
 public class LotReceipt {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lot_receipt_seq")
+    @SequenceGenerator(name = "lot_receipt_seq", allocationSize = 1)
     private Long id;
 
     @ManyToOne

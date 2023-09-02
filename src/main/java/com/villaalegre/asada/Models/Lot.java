@@ -12,7 +12,8 @@ import java.util.Date;
 @Entity
 public class Lot {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lot_seq")
+    @SequenceGenerator(name = "lot_seq", allocationSize = 1)
     private Long id;
     @Column(unique = true)
     private String name;

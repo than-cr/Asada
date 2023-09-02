@@ -1,10 +1,7 @@
 package com.villaalegre.asada.Models;
 
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +12,8 @@ import java.util.Collection;
 @Setter
 public class Privilege {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "privilege_seq")
+    @SequenceGenerator(name = "privilege_seq", allocationSize = 1)
     private Long id;
     @NotNull
     private String name;
