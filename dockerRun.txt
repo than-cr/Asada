@@ -1,9 +1,9 @@
-docker buildx build --platform linux/amd64 -t asada .
+docker buildx build --platform linux/amd64 -t asada . // Correr si se crea desde la mac
 
-sudo docker build --tag=asada:latest .
+sudo docker build --tag=asada:latest . // Correr si se crea desde linux
 
 sudo docker run -it -p 8080:8080 asada
 
 docker tag asada thancr1/asada
-docker commit CONTAINER_ID IMAGE - docker commit a9475ad2621a asada
+docker commit CONTAINER_ID IMAGE - docker commit a9475ad2621a asada // Correr solo la primera vez
 docker push thancr1/asada:latest
