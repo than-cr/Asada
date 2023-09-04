@@ -94,7 +94,7 @@ public class LotController extends AbstractController{
         addMonthToLastMonthPaid(lotFound);
 
         LotDTO lotDTO = lotService.convertToDTO(lotFound);
-        lotDTO.setPayment(CommonValues.DEFAULT_COST);
+        lotDTO.setPayment(priceToPay(lotFound.getLastMonthPaid()));
 
         return lotDTO;
     }
@@ -118,7 +118,7 @@ public class LotController extends AbstractController{
 
         LotReceipt lotReceipt = new LotReceipt();
         lotReceipt.setLot(lotFound);
-        lotReceipt.setCost(CommonValues.DEFAULT_COST);
+        lotReceipt.setCost(priceToPay(lotFound.getLastMonthPaid()));
         lotReceipt.setMonthPaid(lotFound.getLastMonthPaid());
         lotReceipt.setReceiptId(lotDTO.getReceiptId());
 
@@ -137,5 +137,42 @@ public class LotController extends AbstractController{
         calendar.add(Calendar.MONTH, monthsToPay);
 
         lot.setLastMonthPaid(calendar.getTime());
+    }
+
+    private double priceToPay(Date date) {
+        Calendar date1 = Calendar.getInstance();
+        Calendar date2 = Calendar.getInstance();
+        Calendar date3 = Calendar.getInstance();
+        Calendar date4 = Calendar.getInstance();
+        Calendar date5 = Calendar.getInstance();
+        date1.set(2010, Calendar.DECEMBER,31);
+        date2.set(2011, Calendar.JUNE, 30);
+        date3.set(2012, Calendar.SEPTEMBER, 30);
+        date4.set(2014, Calendar.DECEMBER, 31);
+        date5.set(2018, Calendar.JUNE, 30);
+
+        // Dic 2010
+        if (date.before(date1.getTime())) {
+            return CommonValues.DEFAULT_COST_DEC_2010;
+        }
+        // Jan 2011 - Jun 2011
+        else if (date.after(date1.getTime()) && date.before(date2.getTime())) {
+            return CommonValues.DEFAULT_COST_JAN_JUN_2011;
+        }
+        // Jul 2011 - Sep 2012
+        else if (date.after(date2.getTime()) && date.before(date3.getTime())) {
+            return CommonValues.DEFAULT_COST_JUL11_SEPT12;
+        }
+        // Oct 2012 - Dec 2014
+        else if (date.after(date3.getTime()) && date.before(date4.getTime())) {
+            return CommonValues.DEFAULT_COST_OCT12_DEC14;
+        }
+        // Jan 2015 - Jun-2018
+        else if (date.after(date4.getTime()) && date.before(date5.getTime())) {
+            return CommonValues.DEFAULT_COST_ENE15_JUN18;
+        }
+        else {
+            return CommonValues.DEFAULT_COST;
+        }
     }
 }
