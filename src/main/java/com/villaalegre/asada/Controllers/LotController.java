@@ -140,11 +140,7 @@ public class LotController extends AbstractController{
         calendar.add(Calendar.DATE, 1);
         calendar.add(Calendar.MONTH, monthsToPay);
 
-        Date dateToSet = calendar.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = dateFormat.format(dateToSet);
-
-        lot.setLastMonthPaid(dateFormat.parse(dateString));
+        lot.setLastMonthPaid(calendar.getTime());
     }
 
     private double priceToPay(Date date) {
