@@ -18,6 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.DateUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -127,16 +130,21 @@ public class LotController extends AbstractController{
         return lotDTO;
     }
 
-    private void addMonthToLastMonthPaid(Lot lot) {
+    private void addMonthToLastMonthPaid(Lot lot) throws ParseException {
         int monthsToPay = 1;
 
         Date lastMonthPaid = lot.getLastMonthPaid();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(lastMonthPaid);
+        calendar.add(Calendar.DATE, 1);
         calendar.add(Calendar.MONTH, monthsToPay);
 
-        lot.setLastMonthPaid(calendar.getTime());
+        Date dateToSet = calendar.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = dateFormat.format(dateToSet);
+
+        lot.setLastMonthPaid(dateFormat.parse(dateString));
     }
 
     private double priceToPay(Date date) {

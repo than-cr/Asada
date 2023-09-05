@@ -65,7 +65,8 @@ function loadPaymentData(data) {
     $("#paymentLotId").val(data.id);
     const formatter = new Intl.DateTimeFormat("es", {month: "long", year: "numeric"});
     const date = new Date(data.lastMonthPaid);
-    $("#monthToPay").val(formatter.format(new Date(date.getFullYear(), date.getMonth(), date.getDate())));
+    let DateToSet = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+    $("#monthToPay").val(formatter.format(DateToSet));
     $("#totalToPay").val(data.payment);
 
     $("#paymentModal").modal("show");
