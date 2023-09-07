@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 public class PageWrapper<T> {
-    public static final int MAX_PAGE_ITEM_DISPLAY = 5;
+    public static final int MAX_PAGE_ITEM_DISPLAY = CommonValues.PAGE_SIZE;
     private final Page<T> page;
     private final List<PageItem> items;
     private final int currentNumber;

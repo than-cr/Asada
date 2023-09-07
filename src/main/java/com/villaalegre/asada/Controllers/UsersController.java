@@ -40,7 +40,7 @@ public class UsersController extends AbstractController {
     @PreAuthorize("hasPermission('Users', 'View users')")
     @GetMapping("/" + OBJECT_NAME)
     public String index(Model model, Pageable pageable) {
-        pageable = PageRequest.of(pageable.getPageNumber(), 5);
+        pageable = PageRequest.of(pageable.getPageNumber(), CommonValues.PAGE_SIZE);
 
         PageWrapper<User> page = new PageWrapper<>(userService.findAll(pageable), "/users");
         List<Type> statuses = typeService.findByGroup("user status");

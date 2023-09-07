@@ -65,7 +65,7 @@
                 </table>
 
                 <div class="col-auto d-flex">
-                    <a class="btn btn-link px-1 me-1" th:if="${page.hasPrevious()}" th:href="@{/users(size=${page.getSize()}, page=${page.getPreviousPage() - 1})}"><span class="fas fa-chevron-left me-2"></span>Anterior</a>
+                    <a class="btn btn-link px-1 me-1" th:if="${page.hasPrevious()}" th:href="@{/users(size=${page.getSize()}, page=${page.getPreviousPage()})}"><span class="fas fa-chevron-left me-2"></span>Anterior</a>
                     <a class="btn btn-link px-1 me-1" th:if="${page.hasNext()}" th:href="@{/users(size=${page.getSize()}, page=${page.getCurrentNumber()})}">Siguiente<span class="fas fa-chevron-right ms-2"></span></a>
                 </div>
             </div>
