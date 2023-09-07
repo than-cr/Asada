@@ -1,8 +1,44 @@
 $(document).ready(function () {
 
+    $("#userModalForm").validate({
+        rules: {
+            userId: {
+                required: true,
+                digits: true,
+                minlength: 8
+            },
+            firstName: {
+                required: true,
+                minlength: 2
+            },
+            lastName: {
+                required: true,
+                minlength: 1
+            },
+            motherLastName: {
+                required: true,
+                minlength: 1
+            },
+            phone: {
+                required: true,
+                digits: true
+            },
+            email: {
+                required: false,
+                email: true
+            },
+            "status": {
+                required: true
+            },
+            role: {
+                required: true
+            }
+        }
+    })
+
     $("#addUser").click(function () {
         event.preventDefault();
-        $("#userId").val("");
+        $("#userId").val("").attr("disabled", false);
         $("#firstName").val("");
         $("#lastName").val("");
         $("#motherLastName").val("");
@@ -11,13 +47,17 @@ $(document).ready(function () {
         $("#status").val("");
         $("#role").val("");
 
-        $("#userId").attr("disabled", false);
-
         $("#userModal").modal('show');
     });
 
     $("#saveUser").click(function () {
         event.preventDefault();
+
+        $("#userModalForm").validate();
+        if (!$("#userModalForm").valid()) {
+            return;
+        }
+
        let user =  {
            username: $("#userId").val(),
            firstName: $("#firstName").val(),
