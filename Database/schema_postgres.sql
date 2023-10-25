@@ -88,18 +88,25 @@ create table lot
 
 create sequence lot_seq as integer start with 1;
 
--- auto-generated definition
-create table lot_receipt
+create table public.lot_receipt
 (
-    id         bigint
+    id           bigint           not null
         primary key,
-    lot_id     bigint      not null,
-    receipt_id varchar(50) not null,
-    month_paid date        not null,
-    cost       DOUBLE PRECISION      not null,
-    created_date timestamp  not null,
-    constraint lot_receipt_lot_id_fk
-        foreign key (lot_id) references lot (id)
+    lot_id       bigint           not null
+        constraint lot_receipt_lot_id_fk
+        references public.lot,
+    receipt_id   varchar(50)      not null,
+    month_paid   date             not null,
+    cost         double precision not null,
+    created_date timestamp        not null,
+    status_id    bigint default 6
+        constraint lot_receipt_type_id_fk
+        references public.type
 );
+
+alter table public.lot_receipt
+    owner to than;
+
+
 
 create sequence lot_receipt_seq as integer start with 1;

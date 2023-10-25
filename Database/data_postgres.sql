@@ -3,7 +3,10 @@ INSERT INTO type (id, name, "group") VALUES
                                          (2, 'Inactivo', 'user status'),
                                          (3, 'Activo', 'lot status'),
                                          (4, 'Inactivo', 'lot status'),
-                                         (5, 'Suspendido', 'lot status')
+                                         (5, 'Suspendido', 'lot status'),
+                                         (6, 'Válido', 'receipt status'),
+                                         (7, 'Cancelado', 'receipt status'),
+                                         (8, 'Eliminado', 'receipt status')
 ;
 
 INSERT INTO role (id, name, status) VALUES

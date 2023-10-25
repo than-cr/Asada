@@ -9,6 +9,5 @@ public class CommonValues {
     public static final double DEFAULT_COST_OCT12_DEC14 = 3500;
     public static final double DEFAULT_COST_ENE15_JUN18 = 5000;
     public static final double DEFAULT_COST = 6000;
-
     public static final int PAGE_SIZE = 10;
 }

@@ -1,9 +1,9 @@
-<html lang="en"
+<html lang="es"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout.html}">
 
 <div layout:fragment="externalHead">
-<!--    <script src="../static/js/lot.js" th:src="@{/js/lot.js}"></script>-->
+    <script src="../static/js/receipts.js" th:src="@{/js/receipts.js}"></script>
 </div>
 
 <div layout:fragment="content">
@@ -48,9 +48,13 @@
                 <div class="row g-3">
                     <div class="col-auto">
                         <div class="timeline-item-bar position-relative">
-                            <div class="icon-item icon-item-md rounded-7 border">
-                                <span class="fa-solid fa-receipt text-success fs--1"></span>
-                            </div>
+                            <button th:if="${editReceipts}" class="icon-item icon-item-md rounded-7 border" th:attr="onclick=|editReceipt('${lotData.getReceiptId()}')|">
+                                <span class="fa-solid fa-pencil text-primary fs--1"></span>
+                            </button>
+                            <button th:if="${deleteReceipts}"class="icon-item icon-item-md rounded-7 border" th:attr="onclick=|deleteReceipt('${lotData.getReceiptId()}')|">
+                                <span class="fa-solid fa-trash text-danger fs--1"></span>
+                            </button>
+
                             <span class="timeline-bar border-end border-dashed border-300"></span>
                         </div>
                     </div>
@@ -61,9 +65,55 @@
                             </div>
                         </div>
                         <h6 class="fs--1 fw-normal mb-3 fw-semi-bold" th:text="${#dates.format(lotData.getCreatedDate(), 'dd-MM-yyyy')}"></h6>
+                        <h6 class="fs--1 fw-normal mb-3 fw-semi-bold" th:text="'Estado de recibo: ' + ${lotData.getStatus().getName()}"></h6>
                         <p class="fs--1 text-800 w-sm-60 mb-1" th:text="'Mes pagado: ' + ${#dates.format(lotData.getMonthPaid(), 'MM-yyyy')}"></p>
                         <p class="fs--1 text-800 w-sm-60 mb-5" th:text="'Total pagado: ' + ${lotData.getCost()}"></p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    Lot Receipt modal edit-->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="receiptModalTitle">Editar Recibo</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs--1"></span> </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate="">
+                        <input type="hidden" id="receiptId" value=""/>
+
+                        <label class="form-label" for="receipt">Recibo</label>
+                        <input class="form-control" id="receipt" type="text" required/>
+                        <div class="invalid-feedback">Favor ingrese un identificador de recibo.</div>
+
+                        <br>
+                        <div class="flatpickr-input-container">
+                            <div class="form-floating">
+                                <input class="form-control datetimepicker" id="monthToPay" type="text" placeholder="Mes por pagar" data-options='{"disableMobile":true}'/>
+                                <label class="ps-6" for="monthToPay">Mes por pagar</label>
+                                <span class="uil uil-calendar-alt flatpickr-icon text-700"></span>
+                            </div>
+                        </div>
+
+                        <label class="form-label" for="totalToPay">Total a pagar</label>
+                        <input class="form-control" id="totalToPay" type="text" placeholder="Total a pagar"/>
+
+                        <label class="form-label" for="status">Estado</label>
+                        <select class="form-select" id="status" name="status" required>
+                            <option value="">Seleccionar</option>
+                            <option th:each="status : ${statuses}" th:value="${status.name}" th:text="${status.name}"></option>
+                        </select>
+
+                        <br>
+
+                        <div class="flex-1 text-end">
+                            <button class="btn btn-primary px-6 px-sm-6" type="submit" id="saveReceiptMod">Guardar<span class="fas fa-save ms-1" data-fa-transform="shrink-3"> </span></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

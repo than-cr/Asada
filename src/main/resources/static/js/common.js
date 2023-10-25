@@ -31,7 +31,7 @@ function generateUuid() {
 }
 
 function successAlert(action) {
-    swal({
+    Swal.fire({
         title: "Bien hecho",
         text: "Información guardada exitosamente.",
         icon: "success",
@@ -40,10 +40,25 @@ function successAlert(action) {
 }
 
 function errorAlert() {
-    swal({
+    Swal.fire({
         title: "Error",
         text: "Hubo un error al procesar la información.",
         icon: "warning",
         button: "Cerrar",
+    });
+}
+
+var deletePrint = function (callback) {
+    Swal.fire({
+        title: 'Está seguro?',
+        text: 'Esta acción no podra ser revertida en el futuro.',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        confirmButtonColor: 'Red'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            callback();
+        }
     });
 }

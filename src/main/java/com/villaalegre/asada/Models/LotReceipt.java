@@ -18,6 +18,11 @@ public class LotReceipt {
     @ManyToOne
     @JoinColumn(name = "lot_id")
     private Lot lot;
+
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Type status;
+
     private String receiptId;
     private Date MonthPaid;
     private double cost;
