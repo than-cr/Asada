@@ -1,12 +1,8 @@
 package com.villaalegre.asada.DTO;
 
-import com.villaalegre.asada.Models.Type;
-import com.villaalegre.asada.Services.TypeService;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Getter
 @Setter

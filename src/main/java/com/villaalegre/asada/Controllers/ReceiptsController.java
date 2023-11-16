@@ -51,8 +51,8 @@ public class ReceiptsController extends AbstractController{
     @PreAuthorize("hasPermission('Receipts', 'Edit receipt')")
     @GetMapping("/" + OBJECT_NAME + "/edit/{receiptId}")
     @ResponseBody
-    public LotReceiptDTO editReceipt (@PathVariable(value = "receiptId") String receiptId) throws Exception {
-        Optional<LotReceipt> lotReceipt = lotReceiptService.findByReceiptId(receiptId);
+    public LotReceiptDTO editReceipt (@PathVariable(value = "receiptId") Long receiptId) throws Exception {
+        Optional<LotReceipt> lotReceipt = lotReceiptService.findById(receiptId);
 
         if (lotReceipt.isEmpty()){
             throw new Exception("Receipt not found.");
@@ -88,7 +88,7 @@ public class ReceiptsController extends AbstractController{
     @PostMapping("/" + OBJECT_NAME + "/delete")
     @ResponseBody
     public LotReceiptDTO deleteReceipt (@RequestBody LotReceiptDTO lotReceiptDTO) throws Exception {
-        Optional<LotReceipt> lotReceipt = lotReceiptService.findByReceiptId(lotReceiptDTO.getReceiptId());
+        Optional<LotReceipt> lotReceipt = lotReceiptService.findById(lotReceiptDTO.getId());
 
         if (lotReceipt.isEmpty()) {
             throw new Exception("Receipt not found.");

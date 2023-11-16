@@ -48,10 +48,10 @@
                 <div class="row g-3">
                     <div class="col-auto">
                         <div class="timeline-item-bar position-relative">
-                            <button th:if="${editReceipts}" class="icon-item icon-item-md rounded-7 border" th:attr="onclick=|editReceipt('${lotData.getReceiptId()}')|">
+                            <button th:if="${editReceipts}" class="icon-item icon-item-md rounded-7 border" th:attr="onclick=|editReceipt('${lotData.getId()}')|">
                                 <span class="fa-solid fa-pencil text-primary fs--1"></span>
                             </button>
-                            <button th:if="${deleteReceipts}"class="icon-item icon-item-md rounded-7 border" th:attr="onclick=|deleteReceipt('${lotData.getReceiptId()}')|">
+                            <button th:if="${deleteReceipts}"class="icon-item icon-item-md rounded-7 border" th:attr="onclick=|deleteReceipt('${lotData.getId()}')|">
                                 <span class="fa-solid fa-trash text-danger fs--1"></span>
                             </button>
 

@@ -24,7 +24,7 @@ function deleteReceipt (receiptId) {
         let url = '/receipts/delete'
 
         let receipt = {
-            receiptId: receiptId
+            id: receiptId
         }
 
         let objectToSave = JSON.stringify(receipt);
